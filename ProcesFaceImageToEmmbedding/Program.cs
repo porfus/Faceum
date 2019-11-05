@@ -16,7 +16,7 @@ namespace ProcesFaceImageToEmmbedding
     class Program
     {
         static string PathToFacePhotos = "/photos/";
-        static int BatchSize = 16;
+        static int BatchSize = 1;
         static ConcurrentQueue<string[]> facePhotoToProcessQueue = new ConcurrentQueue<string[]>();
         static ConcurrentQueue<EmbeddingFaceModel> embeddingFaces = new ConcurrentQueue<EmbeddingFaceModel>();
         static int TotalFaceprocessing = 0;
