@@ -2,7 +2,7 @@ from torchvision import models
 import torchvision.transforms as transforms
 from torchsummary import summary
 import torch
-#import model_irse
+import model_irse
 import skimage as sk
 import numpy as np
 
@@ -25,11 +25,11 @@ def hflip_batch(imgs_tensor):
 
     return hfliped_imgs
 
-#def load_model():
-#    model = model_irse.IR_50(input_size = [112, 112]) 
-#    model.load_state_dict(torch.load('model/ms1m_ir50/backbone_ir50_ms1m_epoch120.pth', map_location=torch.device('cpu')))
-#    model.eval()
-#    return model
+def load_model():
+    model = model_irse.IR_50(input_size = [112, 112]) 
+    model.load_state_dict(torch.load('model/ms1m_ir50/backbone_ir50_ms1m_epoch120.pth', map_location=torch.device('cpu')))
+    model.eval()
+    return model
 
 def get_image_face_embedding(model, image_filename):
     img = sk.io.imread(image_filename)/float(255)
