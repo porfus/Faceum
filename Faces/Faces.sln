@@ -13,37 +13,35 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvDnnTestum", "..\OpenC
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TestFaced", "..\TestFaced\TestFaced.pyproj", "{6D906639-9349-41C4-9A83-D3C1B645E591}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MtcnnNet", "..\MtcnnNet\MtcnnNet.csproj", "{839AC954-D384-4A42-8666-FE2A066D73B3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frida", "Frida", "{03DC0CE3-C66A-43E4-A6AB-5019F7231350}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FridaServer", "FridaServer", "{F56DFDAC-0E79-4699-AD46-6CA9FB3CE5CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ffmpeg", "ffmpeg", "{40A03E60-BB46-44B0-B4F8-551069F86832}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "videoFaceExtraction", "..\videoFaceExtraction\videoFaceExtraction.csproj", "{ABC55984-E553-4550-8437-69ACFDED5966}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "videoFaceExtraction", "..\videoFaceExtraction\videoFaceExtraction.csproj", "{ABC55984-E553-4550-8437-69ACFDED5966}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6A33D312-0F3A-4C8E-AB01-4CDB8B143BC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MtCnn.Net", "..\MtCNN\MtCnn.Net.csproj", "{B633AD3D-332B-462A-AD77-6EDDC87056F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MtCnn.Net", "..\MtCNN\MtCnn.Net.csproj", "{B633AD3D-332B-462A-AD77-6EDDC87056F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "..\Models\Models.csproj", "{56CF39D6-4C73-4984-8AD5-E5D06CBBBD30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Models\Models.csproj", "{56CF39D6-4C73-4984-8AD5-E5D06CBBBD30}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{EE9F0085-C0B1-42DE-B423-1543A5EFD98D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurboCopy", "..\TurboCopy\TurboCopy.csproj", "{B465212E-21D1-49D5-A98B-71E04B64276F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurboCopy", "..\TurboCopy\TurboCopy.csproj", "{B465212E-21D1-49D5-A98B-71E04B64276F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageDownloadValidator", "..\ImageDownloadValidator\ImageDownloadValidator.csproj", "{8865CDE2-5893-4376-8A08-899232DB13A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageDownloadValidator", "..\ImageDownloadValidator\ImageDownloadValidator.csproj", "{8865CDE2-5893-4376-8A08-899232DB13A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceInferiance", "..\FaceInferiance\FaceInferiance.csproj", "{85C69CEB-A46B-4061-950E-99496612AF93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaceInferiance", "..\FaceInferiance\FaceInferiance.csproj", "{85C69CEB-A46B-4061-950E-99496612AF93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetFaceEmmbeddings", "..\GetFaceEmmbeddings\GetFaceEmmbeddings.csproj", "{18FF508E-D5FE-43B4-838C-8FF337400EBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetFaceEmmbeddings", "..\GetFaceEmmbeddings\GetFaceEmmbeddings.csproj", "{18FF508E-D5FE-43B4-838C-8FF337400EBB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PhotoProcessing", "PhotoProcessing", "{7ECB79C6-E78D-434D-8089-1056C4030750}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcesFaceImageToEmmbedding", "..\ProcesFaceImageToEmmbedding\ProcesFaceImageToEmmbedding.csproj", "{3C2F59CD-9CE4-45B1-A696-7247802D182E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcesFaceImageToEmmbedding", "..\ProcesFaceImageToEmmbedding\ProcesFaceImageToEmmbedding.csproj", "{3C2F59CD-9CE4-45B1-A696-7247802D182E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metricum", "..\Metricum\Metricum.csproj", "{11C8A60A-DF6A-4D65-993E-878FB9364ED8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metricum", "..\Metricum\Metricum.csproj", "{11C8A60A-DF6A-4D65-993E-878FB9364ED8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,18 +89,6 @@ Global
 		{6D906639-9349-41C4-9A83-D3C1B645E591}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D906639-9349-41C4-9A83-D3C1B645E591}.Release|x64.ActiveCfg = Release|Any CPU
 		{6D906639-9349-41C4-9A83-D3C1B645E591}.Release|x86.ActiveCfg = Release|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Debug|x64.Build.0 = Debug|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Debug|x86.Build.0 = Debug|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Release|x64.ActiveCfg = Release|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Release|x64.Build.0 = Release|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Release|x86.ActiveCfg = Release|Any CPU
-		{839AC954-D384-4A42-8666-FE2A066D73B3}.Release|x86.Build.0 = Release|Any CPU
 		{ABC55984-E553-4550-8437-69ACFDED5966}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ABC55984-E553-4550-8437-69ACFDED5966}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABC55984-E553-4550-8437-69ACFDED5966}.Debug|x64.ActiveCfg = Debug|Any CPU
