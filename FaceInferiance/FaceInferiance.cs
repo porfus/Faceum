@@ -20,6 +20,7 @@ namespace FaceInferiance
         public FaceInferiance()
         {
             pythonGilState = Py.GIL();
+            var model_irse = ImportModuleFromResource("model_irse", "model_irse.py");
             module_face = ImportModuleFromResource("faceInfiriance", "FaceInfiriance.py");
             var funcLoadModel = module_face.GetAttr("load_model");
             model = funcLoadModel.Invoke();
