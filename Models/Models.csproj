@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>netcoreapp2.1;net472</TargetFramework>
     <AssemblyTitle>Models</AssemblyTitle>
     <Product>Models</Product>
     <Copyright>Copyright ©  2019</Copyright>
