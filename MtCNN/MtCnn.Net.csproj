@@ -2,7 +2,7 @@
   <PropertyGroup>
     <RootNamespace>MtCNN</RootNamespace>
     <AssemblyName>MtCNN</AssemblyName>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyTitle>MtCNN</AssemblyTitle>
     <Product>MtCNN</Product>
     <Copyright>Copyright ©  2019</Copyright>
