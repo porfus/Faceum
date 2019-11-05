@@ -2,7 +2,7 @@ from torchvision import models
 import torchvision.transforms as transforms
 from torchsummary import summary
 import torch
-import model_irse
+#import model_irse
 import skimage as sk
 import numpy as np
 
