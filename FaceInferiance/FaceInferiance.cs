@@ -14,24 +14,19 @@ namespace FaceInferiance
     {
         private Py.GILState pythonGilState;
         private PyObject module_face;
-        private PyObject model;
         private PyObject funcGetImageFaceEmbedding;
 
         public FaceInferiance()
         {
-            pythonGilState = Py.GIL();
-            
+            pythonGilState = Py.GIL();            
             module_face = ImportModuleFromResource("faceInfiriance", "FaceInfiriance.py");
-            var funcLoadModel = module_face.GetAttr("load_model");
-            model = funcLoadModel.Invoke();
-
             funcGetImageFaceEmbedding =  module_face.GetAttr("get_image_face_embedding");
         }
 
         public List<float[]> GetFaceEmmbeddins(params string[] imageFilename )
         {
             var inputArgs = new List<PyObject>();
-            inputArgs.Add(model);
+            inputArgs.Add(module_face);
             inputArgs.AddRange(imageFilename.Select(x => new PyString(x)));
 
             var result = funcGetImageFaceEmbedding.Invoke(inputArgs.ToArray());
