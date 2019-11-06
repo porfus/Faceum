@@ -30,22 +30,29 @@ namespace FaceInferiance
 
         public List<float[]> GetFaceEmmbeddins(params string[] imageFilename)
         {
-            var inputArgs = new List<PyObject>();
-            inputArgs.Add(model);
-            inputArgs.AddRange(imageFilename.Select(x => new PyString(x)));
-
-            var result = funcGetImageFaceEmbedding.Invoke(inputArgs.ToArray());
-            if (result == null) return null;
-
-            var output = new List<float[]>();
-
-            for(var i=0;i<imageFilename.Length;i++)
+            try
             {
-                output.Add(((float[])result[0].As<float[]>()));
-            }
+                var inputArgs = new List<PyObject>();
+                inputArgs.Add(model);
+                inputArgs.AddRange(imageFilename.Select(x => new PyString(x)));
 
-            
-            return output;
+                var result = funcGetImageFaceEmbedding.Invoke(inputArgs.ToArray());
+                if (result == null) return null;
+
+                var output = new List<float[]>();
+
+                for (var i = 0; i < imageFilename.Length; i++)
+                {
+                    output.Add(((float[])result[0].As<float[]>()));
+                }
+
+
+                return output;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private PyObject ImportModuleFromResource(string moduleName,string resourceScriptName)
