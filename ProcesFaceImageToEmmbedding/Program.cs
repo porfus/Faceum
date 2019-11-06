@@ -20,8 +20,16 @@ namespace ProcesFaceImageToEmmbedding
         static ConcurrentQueue<string[]> facePhotoToProcessQueue = new ConcurrentQueue<string[]>();
         static ConcurrentQueue<EmbeddingFaceModel> embeddingFaces = new ConcurrentQueue<EmbeddingFaceModel>();
         static int TotalFaceprocessing = 0;
+        private static IMongoCollection<EmbeddingFaceModel> _collectionEmbedding;
+
         static void Main(string[] args)
         {
+
+            string connectionString = "mongodb://79.143.30.220:27088";
+            var client = new MongoClient(connectionString);
+            var _db = client.GetDatabase("vk");
+            _collectionEmbedding = _db.GetCollection<EmbeddingFaceModel>("embeddingFace");
+
             Metric.Gauge("FacePhotoToProcessQueue Count", () => { return facePhotoToProcessQueue.Count; }, Unit.Items);
             Metric.Gauge("EmbeddingFaces Count", () => { return embeddingFaces.Count; }, Unit.Items);
             Metric.Gauge("TotalFaceprocessing Count", () => { return TotalFaceprocessing; }, Unit.Items);
@@ -81,11 +89,7 @@ namespace ProcesFaceImageToEmmbedding
 
 
         private static void SaveToDbTask()
-        {
-            string connectionString = "mongodb://79.143.30.220:27088";
-            var client = new MongoClient(connectionString);
-            var _db = client.GetDatabase("vk");
-            var _collectionEmbedding = _db.GetCollection<EmbeddingFaceModel>("embeddingFace");
+        {           
             while (true)
             {
                 if (embeddingFaces.Count > 0)
