@@ -105,8 +105,15 @@ namespace ProcesFaceImageToEmmbedding
                             buffer.Add(data);
                             if(buffer.Count > 100)
                             {
-                                _collectionEmbedding.InsertMany(buffer);
-                                buffer.Clear();
+                                try
+                                {
+                                    _collectionEmbedding.InsertMany(buffer);
+                                    buffer.Clear();
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex);
+                                }
                             }
                            
                         }
