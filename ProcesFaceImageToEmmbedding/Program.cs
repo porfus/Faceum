@@ -85,7 +85,7 @@ namespace ProcesFaceImageToEmmbedding
             string connectionString = "mongodb://79.143.30.220:27088";
             var client = new MongoClient(connectionString);
             var _db = client.GetDatabase("vk");
-            var _collectionEmbedding = _db.GetCollection<EmbeddingFaceModel>("peoples");
+            var _collectionEmbedding = _db.GetCollection<EmbeddingFaceModel>("embeddingFace");
             while (true)
             {
                 if (embeddingFaces.Count > 0)
