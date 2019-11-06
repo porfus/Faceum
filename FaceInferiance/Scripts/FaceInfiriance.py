@@ -29,7 +29,7 @@ def load_model():
     model = model_irse.IR_50(input_size = [112, 112]) 
     model.load_state_dict(torch.load('/models/backbone_ir50_ms1m_epoch120.pth', map_location=torch.device('cuda')))
     model.eval()
-    print(summary(model.to(torch.device('cuda')),(3,112,112)))
+    print(summary(model, (3,112,112),  device='cuda'))
     return model
 
 def get_image_face_embedding(model, image_filename):
