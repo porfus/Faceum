@@ -106,7 +106,7 @@ namespace ProcesFaceImageToEmmbedding
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        //Console.WriteLine(ex);
                     }
                 }
                 else
