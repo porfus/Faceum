@@ -26,8 +26,10 @@ def hflip_batch(imgs_tensor):
     return hfliped_imgs
 
 def load_model():
+    device = torch.device("cuda")
     model = model_irse.IR_50(input_size = [112, 112]) 
-    model.load_state_dict(torch.load('/models/backbone_ir50_ms1m_epoch120.pth', map_location=torch.device('cuda')))
+    model.load_state_dict(torch.load('/models/backbone_ir50_ms1m_epoch120.pth', map_location="cuda:0"))
+    model.to(device)
     model.eval()
     print(summary(model, (3,112,112),  device='cuda'))
     return model
