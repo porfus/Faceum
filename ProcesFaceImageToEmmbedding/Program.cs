@@ -92,7 +92,8 @@ namespace ProcesFaceImageToEmmbedding
 
 
         private static void SaveToDbTask()
-        {           
+        {
+            var buffer = new List<EmbeddingFaceModel>();
             while (true)
             {
                 if (embeddingFaces.Count > 0)
@@ -101,7 +102,13 @@ namespace ProcesFaceImageToEmmbedding
                     {
                         if (embeddingFaces.TryDequeue(out EmbeddingFaceModel data))
                         {
-                            _collectionEmbedding.InsertOne(data);
+                            buffer.Add(data);
+                            if(buffer.Count > 100)
+                            {
+                                _collectionEmbedding.InsertMany(buffer);
+                                buffer.Clear();
+                            }
+                           
                         }
                     }
                     catch (Exception ex)
