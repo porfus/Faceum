@@ -103,17 +103,19 @@ namespace ProcesFaceImageToEmmbedding
                         if (embeddingFaces.TryDequeue(out EmbeddingFaceModel data))
                         {
                             buffer.Add(data);
-                            if(buffer.Count > 100)
+                            if(buffer.Count > 500)
                             {
                                 try
                                 {
                                     _collectionEmbedding.InsertMany(buffer);
-                                    buffer.Clear();
+                                    
                                 }
                                 catch (Exception ex)
                                 {
-                                    Console.WriteLine(ex);
+                                   
                                 }
+                                buffer.Clear();
+
                             }
                            
                         }
