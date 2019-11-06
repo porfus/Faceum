@@ -26,7 +26,7 @@ namespace ProcesFaceImageToEmmbedding
             Metric.Gauge("EmbeddingFaces Count", () => { return embeddingFaces.Count; }, Unit.Items);
             Metric.Gauge("TotalFaceprocessing Count", () => { return TotalFaceprocessing; }, Unit.Items);
 
-            Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null),TimeSpan.FromSeconds(20)));
+            Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null), TimeSpan.FromSeconds(20)));
 
             var files = Directory.EnumerateFiles(PathToFacePhotos, "*", SearchOption.AllDirectories);
             var batch = new List<string>();
@@ -42,11 +42,11 @@ namespace ProcesFaceImageToEmmbedding
                 batch.Add(file);
                 if (batch.Count == BatchSize)
                 {
-                    
+
                     facePhotoToProcessQueue.Enqueue(batch.ToArray());
                     batch.Clear();
                 }
-                if(facePhotoToProcessQueue.Count>100)
+                if (facePhotoToProcessQueue.Count > 100)
                 {
                     Thread.Sleep(1000);
                 }
@@ -90,9 +90,16 @@ namespace ProcesFaceImageToEmmbedding
             {
                 if (embeddingFaces.Count > 0)
                 {
-                    if (embeddingFaces.TryDequeue(out EmbeddingFaceModel data))
+                    try
                     {
-                        _collectionEmbedding.InsertOne(data);
+                        if (embeddingFaces.TryDequeue(out EmbeddingFaceModel data))
+                        {
+                            _collectionEmbedding.InsertOne(data);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
                     }
                 }
                 else
