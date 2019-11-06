@@ -26,6 +26,8 @@ namespace ProcesFaceImageToEmmbedding
             Metric.Gauge("EmbeddingFaces Count", () => { return embeddingFaces.Count; }, Unit.Items);
             Metric.Gauge("TotalFaceprocessing Count", () => { return TotalFaceprocessing; }, Unit.Items);
 
+            Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null),TimeSpan.FromSeconds(20)));
+
             var files = Directory.EnumerateFiles(PathToFacePhotos, "*", SearchOption.AllDirectories);
             var batch = new List<string>();
 
