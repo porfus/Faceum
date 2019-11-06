@@ -35,8 +35,10 @@ namespace FaceInferiance
             inputArgs.AddRange(imageFilename.Select(x => new PyString(x)));
 
             var result = funcGetImageFaceEmbedding.Invoke(inputArgs.ToArray());
-            
+            if (result == null) return null;
+
             var output = new List<float[]>();
+
             for(var i=0;i<imageFilename.Length;i++)
             {
                 output.Add(((float[])result[0].As<float[]>()));

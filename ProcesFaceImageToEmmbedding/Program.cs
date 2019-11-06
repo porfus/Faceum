@@ -73,10 +73,13 @@ namespace ProcesFaceImageToEmmbedding
                     if (facePhotoToProcessQueue.TryDequeue(out string[] batch))
                     {
                         var embed = faceInferiance.GetFaceEmmbeddins(batch);
-                        for (var i = 0; i < embed.Count; i++)
+                        if (embed != null)
                         {
-                            var faceId = Path.GetFileNameWithoutExtension(batch[i]);
-                            embeddingFaces.Enqueue(new EmbeddingFaceModel { FaceId = faceId, Embedding = embed[i] });
+                            for (var i = 0; i < embed.Count; i++)
+                            {
+                                var faceId = Path.GetFileNameWithoutExtension(batch[i]);
+                                embeddingFaces.Enqueue(new EmbeddingFaceModel { FaceId = faceId, Embedding = embed[i] });
+                            }
                         }
                     }
                 }
