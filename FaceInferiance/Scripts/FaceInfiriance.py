@@ -43,5 +43,5 @@ def get_image_face_embedding(model, image_filename):
         fff = model.forward(var_image).detach().cpu().numpy()
         return fff
     except:
-        return null
+        return None
     
