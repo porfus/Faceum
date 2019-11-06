@@ -27,14 +27,14 @@ def hflip_batch(imgs_tensor):
 
 def load_model():
     model = model_irse.IR_50(input_size = [112, 112]) 
-    model.load_state_dict(torch.load('model/ms1m_ir50/backbone_ir50_ms1m_epoch120.pth', map_location=torch.device('cpu')))
+    model.load_state_dict(torch.load('/models/backbone_ir50_ms1m_epoch120.pth', map_location=torch.device('gpu')))
     model.eval()
     return model
 
 def get_image_face_embedding(model, image_filename):
     img = sk.io.imread(image_filename)/float(255)
     img = np.asarray(img).transpose(-1, 0, 1)    
-    var_image = torch.tensor(np.expand_dims(img.astype(np.float32), axis=0)).type('torch.FloatTensor').to(torch.device('cpu'))    
+    var_image = torch.tensor(np.expand_dims(img.astype(np.float32), axis=0)).type('torch.FloatTensor').to(torch.device('gpu'))    
     img2=hflip_batch(var_image)    
     fff = model.forward(var_image).detach().numpy()
     return fff
