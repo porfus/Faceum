@@ -48,8 +48,13 @@ namespace ProcesFaceImageToEmmbedding
             threadSaveToDbTask.Start();
 
             foreach (var file in files)
-            {                
+            {   
+                var faceId = Path.GetFileNameWithoutExtension(file);
+                var q = Builders<EmbeddingFaceModel>.Filter.Eq(x => x.FaceId, faceId);
+                if (_collectionEmbedding.Find(q).CountDocuments() != 0) continue;
+
                 batch.Add(file);
+
                 if (batch.Count == BatchSize)
                 {
                     TotalFaceprocessing++;
@@ -134,14 +139,12 @@ namespace ProcesFaceImageToEmmbedding
                                     Console.WriteLine(ex);
                                 }
                                 buffer.Clear();
-
                             }
-
                         }
                     }
                     catch (Exception ex)
                     {
-                        //Console.WriteLine(ex);
+                        Console.WriteLine(ex);
                     }
                 }
                 else
