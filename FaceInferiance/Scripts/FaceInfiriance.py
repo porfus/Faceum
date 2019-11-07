@@ -42,8 +42,8 @@ def get_image_face_embedding(model, image_filenames):
                 img = sk.io.imread(image_filename)/float(255)
                 img = np.asarray(img).transpose(-1, 0, 1)    
                 img_batch.append(img)
-            except:
-                print("file error")
+            except Exception as e:
+                print("file error" + e)
         img_batch_nm = np.array(img_batch)
         var_image = torch.tensor(img_batch_nm.astype(np.float32)).type('torch.cuda.FloatTensor').to(torch.device('cuda'))    
         img2=hflip_batch(var_image)    
