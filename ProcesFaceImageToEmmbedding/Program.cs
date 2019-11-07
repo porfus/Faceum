@@ -16,7 +16,7 @@ namespace ProcesFaceImageToEmmbedding
     class Program
     {
         static string PathToFacePhotos = "/photos/";
-        static int BatchSize = 16;
+        static int BatchSize = 32;
         static ConcurrentQueue<string[]> facePhotoToProcessQueue = new ConcurrentQueue<string[]>();
         static ConcurrentQueue<EmbeddingFaceModel> embeddingFaces = new ConcurrentQueue<EmbeddingFaceModel>();
         static int TotalFaceprocessing = 0;
@@ -48,8 +48,7 @@ namespace ProcesFaceImageToEmmbedding
             threadSaveToDbTask.Start();
 
             foreach (var file in files)
-            {
-                if (new FileInfo(file).Length <= 100) continue;
+            {                
                 batch.Add(file);
                 if (batch.Count == BatchSize)
                 {
@@ -123,7 +122,7 @@ namespace ProcesFaceImageToEmmbedding
                         if (embeddingFaces.TryDequeue(out EmbeddingFaceModel data))
                         {
                             buffer.Add(data);
-                            if (buffer.Count > 1000)
+                            if (buffer.Count > 100)
                             {
                                 try
                                 {
