@@ -94,6 +94,10 @@ namespace ProcesFaceImageToEmmbedding
                                     var faceId = Path.GetFileNameWithoutExtension(imgFileName);
                                     embeddingFaces.Enqueue(new EmbeddingFaceModel { FaceId = faceId, Embedding = singleEmmbedded[0] });
                                 }
+                                else
+                                {
+                                    Console.WriteLine("Error with single file processing: " + imgFileName);
+                                }
                             }
                         }
                     }
