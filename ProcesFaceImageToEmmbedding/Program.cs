@@ -38,7 +38,7 @@ namespace ProcesFaceImageToEmmbedding
             Metric.Gauge("TotalEmbeddedingsSaveToDb Count", () => { return TotalEmbeddedingsSaveToDb; }, Unit.Items); 
             Metric.Gauge("FileSkippedCount Count", () => { return FileSkippedCount; }, Unit.Items);
 
-            Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null), TimeSpan.FromSeconds(60)));
+           
 
             var files = Directory.EnumerateFiles(PathToFacePhotos, "*", SearchOption.AllDirectories);
             var batch = new List<string>();
@@ -52,14 +52,19 @@ namespace ProcesFaceImageToEmmbedding
             Console.Write("Getting processing file from db... ");
             var cursor = _collectionEmbedding.Find(x => true).ToCursor();
             var processedFilesFromDb = new HashSet<string>(3000000);
+            int iii = 0;
             while(cursor.MoveNext())
             {
                 foreach(var processedFileFromDb in cursor.Current)
                 {
                     processedFilesFromDb.Add(processedFileFromDb.FaceId);
+                    iii++;
+                    if (iii % 1000 == 0) Console.WriteLine(iii);
                 }
+                
             }
             Console.WriteLine("Ok");
+            Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null), TimeSpan.FromSeconds(60)));
 
             foreach (var file in files)
             {   
