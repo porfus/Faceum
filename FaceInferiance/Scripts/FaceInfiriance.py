@@ -34,11 +34,18 @@ def load_model():
     print(summary(model, (3,112,112),  device='cuda'))
     return model
 
-def get_image_face_embedding(model, image_filename):
+def get_image_face_embedding(model, image_filenames):
     try:
-        img = sk.io.imread(image_filename)/float(255)
-        img = np.asarray(img).transpose(-1, 0, 1)    
-        var_image = torch.tensor(np.expand_dims(img.astype(np.float32), axis=0)).type('torch.cuda.FloatTensor').to(torch.device('cuda'))    
+        img_batch=[]
+        for image_filename in image_filenames:
+            try:
+                img = sk.io.imread(image_filename)/float(255)
+                img = np.asarray(img).transpose(-1, 0, 1)    
+                img_batch.append(img)
+            except:
+                print("file error")
+        img_batch_nm = np.array(img_batch)
+        var_image = torch.tensor(img_batch_nm.astype(np.float32)).type('torch.cuda.FloatTensor').to(torch.device('cuda'))    
         img2=hflip_batch(var_image)    
         fff = model.forward(var_image).detach().cpu().numpy()
         return fff

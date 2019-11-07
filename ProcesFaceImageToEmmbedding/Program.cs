@@ -16,10 +16,11 @@ namespace ProcesFaceImageToEmmbedding
     class Program
     {
         static string PathToFacePhotos = "/photos/";
-        static int BatchSize = 1;
+        static int BatchSize = 16;
         static ConcurrentQueue<string[]> facePhotoToProcessQueue = new ConcurrentQueue<string[]>();
         static ConcurrentQueue<EmbeddingFaceModel> embeddingFaces = new ConcurrentQueue<EmbeddingFaceModel>();
         static int TotalFaceprocessing = 0;
+        static int TotalEmbeddedingsSaveToDb = 0;
         private static IMongoCollection<EmbeddingFaceModel> _collectionEmbedding;
 
         static void Main(string[] args)
@@ -32,7 +33,8 @@ namespace ProcesFaceImageToEmmbedding
 
             Metric.Gauge("FacePhotoToProcessQueue Count", () => { return facePhotoToProcessQueue.Count; }, Unit.Items);
             Metric.Gauge("EmbeddingFaces Count", () => { return embeddingFaces.Count; }, Unit.Items);
-            Metric.Gauge("TotalFaceprocessing Count", () => { return TotalFaceprocessing; }, Unit.Items);
+            Metric.Gauge("TotalFaceprocessing Count", () => { return TotalFaceprocessing; }, Unit.Items); 
+            Metric.Gauge("TotalEmbeddedingsSaveToDb Count", () => { return TotalEmbeddedingsSaveToDb; }, Unit.Items);
 
             Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null), TimeSpan.FromSeconds(20)));
 
@@ -50,7 +52,7 @@ namespace ProcesFaceImageToEmmbedding
                 batch.Add(file);
                 if (batch.Count == BatchSize)
                 {
-
+                    TotalFaceprocessing++;
                     facePhotoToProcessQueue.Enqueue(batch.ToArray());
                     batch.Clear();
                 }
@@ -73,12 +75,28 @@ namespace ProcesFaceImageToEmmbedding
                     if (facePhotoToProcessQueue.TryDequeue(out string[] batch))
                     {
                         var embed = faceInferiance.GetFaceEmmbeddins(batch);
-                        if (embed != null)
+                        if (embed.Count == batch.Length)
                         {
-                            for (var i = 0; i < embed.Count; i++)
+                            if (embed != null)
                             {
-                                var faceId = Path.GetFileNameWithoutExtension(batch[i]);
-                                embeddingFaces.Enqueue(new EmbeddingFaceModel { FaceId = faceId, Embedding = embed[i] });
+                                for (var i = 0; i < embed.Count; i++)
+                                {
+                                    var faceId = Path.GetFileNameWithoutExtension(batch[i]);
+                                    embeddingFaces.Enqueue(new EmbeddingFaceModel { FaceId = faceId, Embedding = embed[i] });
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Batch processing error");
+                            foreach(var imgFileName in batch)
+                            {
+                                var singleEmmbedded = faceInferiance.GetFaceEmmbeddins(imgFileName);
+                                if (singleEmmbedded != null && singleEmmbedded.Count == 1)
+                                {
+                                    var faceId = Path.GetFileNameWithoutExtension(imgFileName);
+                                    embeddingFaces.Enqueue(new EmbeddingFaceModel { FaceId = faceId, Embedding = singleEmmbedded[0] });
+                                }
                             }
                         }
                     }
@@ -103,12 +121,12 @@ namespace ProcesFaceImageToEmmbedding
                         if (embeddingFaces.TryDequeue(out EmbeddingFaceModel data))
                         {
                             buffer.Add(data);
-                            if(buffer.Count > 500)
+                            if(buffer.Count > 1000)
                             {
                                 try
                                 {
                                     _collectionEmbedding.InsertMany(buffer);
-                                    
+                                    TotalEmbeddedingsSaveToDb += buffer.Count;
                                 }
                                 catch (Exception ex)
                                 {
