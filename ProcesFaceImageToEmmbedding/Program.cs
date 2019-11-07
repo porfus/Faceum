@@ -49,6 +49,7 @@ namespace ProcesFaceImageToEmmbedding
 
             foreach (var file in files)
             {
+                if (new FileInfo(file).Length <= 100) continue;
                 batch.Add(file);
                 if (batch.Count == BatchSize)
                 {
