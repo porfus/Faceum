@@ -21,6 +21,7 @@ namespace ProcesFaceImageToEmmbedding
         static ConcurrentQueue<EmbeddingFaceModel> embeddingFaces = new ConcurrentQueue<EmbeddingFaceModel>();
         static int TotalFaceprocessing = 0;
         static int TotalEmbeddedingsSaveToDb = 0;
+        static int FileSkippedCount = 0;
         private static IMongoCollection<EmbeddingFaceModel> _collectionEmbedding;
 
         static void Main(string[] args)
@@ -34,7 +35,8 @@ namespace ProcesFaceImageToEmmbedding
             Metric.Gauge("FacePhotoToProcessQueue Count", () => { return facePhotoToProcessQueue.Count; }, Unit.Items);
             Metric.Gauge("EmbeddingFaces Count", () => { return embeddingFaces.Count; }, Unit.Items);
             Metric.Gauge("TotalFaceprocessing Count", () => { return TotalFaceprocessing; }, Unit.Items);
-            Metric.Gauge("TotalEmbeddedingsSaveToDb Count", () => { return TotalEmbeddedingsSaveToDb; }, Unit.Items);
+            Metric.Gauge("TotalEmbeddedingsSaveToDb Count", () => { return TotalEmbeddedingsSaveToDb; }, Unit.Items); 
+            Metric.Gauge("FileSkippedCount Count", () => { return FileSkippedCount; }, Unit.Items);
 
             Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null), TimeSpan.FromSeconds(60)));
 
@@ -51,7 +53,11 @@ namespace ProcesFaceImageToEmmbedding
             {   
                 var faceId = Path.GetFileNameWithoutExtension(file);
                 var q = Builders<EmbeddingFaceModel>.Filter.Eq(x => x.FaceId, faceId);
-                if (_collectionEmbedding.Find(q).CountDocuments() != 0) continue;
+                if (_collectionEmbedding.Find(q).CountDocuments() != 0)
+                {
+                    FileSkippedCount++;
+                    continue;
+                }
 
                 batch.Add(file);
 
