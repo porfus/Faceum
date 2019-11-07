@@ -33,7 +33,7 @@ namespace ProcesFaceImageToEmmbedding
 
             Metric.Gauge("FacePhotoToProcessQueue Count", () => { return facePhotoToProcessQueue.Count; }, Unit.Items);
             Metric.Gauge("EmbeddingFaces Count", () => { return embeddingFaces.Count; }, Unit.Items);
-            Metric.Gauge("TotalFaceprocessing Count", () => { return TotalFaceprocessing; }, Unit.Items); 
+            Metric.Gauge("TotalFaceprocessing Count", () => { return TotalFaceprocessing; }, Unit.Items);
             Metric.Gauge("TotalEmbeddedingsSaveToDb Count", () => { return TotalEmbeddedingsSaveToDb; }, Unit.Items);
 
             Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null), TimeSpan.FromSeconds(20)));
@@ -75,21 +75,18 @@ namespace ProcesFaceImageToEmmbedding
                     if (facePhotoToProcessQueue.TryDequeue(out string[] batch))
                     {
                         var embed = faceInferiance.GetFaceEmmbeddins(batch);
-                        if (embed.Count == batch.Length)
+                        if (embed != null && embed.Count == batch.Length)
                         {
-                            if (embed != null)
+                            for (var i = 0; i < embed.Count; i++)
                             {
-                                for (var i = 0; i < embed.Count; i++)
-                                {
-                                    var faceId = Path.GetFileNameWithoutExtension(batch[i]);
-                                    embeddingFaces.Enqueue(new EmbeddingFaceModel { FaceId = faceId, Embedding = embed[i] });
-                                }
+                                var faceId = Path.GetFileNameWithoutExtension(batch[i]);
+                                embeddingFaces.Enqueue(new EmbeddingFaceModel { FaceId = faceId, Embedding = embed[i] });
                             }
                         }
                         else
                         {
                             Console.WriteLine("Batch processing error");
-                            foreach(var imgFileName in batch)
+                            foreach (var imgFileName in batch)
                             {
                                 var singleEmmbedded = faceInferiance.GetFaceEmmbeddins(imgFileName);
                                 if (singleEmmbedded != null && singleEmmbedded.Count == 1)
@@ -121,7 +118,7 @@ namespace ProcesFaceImageToEmmbedding
                         if (embeddingFaces.TryDequeue(out EmbeddingFaceModel data))
                         {
                             buffer.Add(data);
-                            if(buffer.Count > 1000)
+                            if (buffer.Count > 1000)
                             {
                                 try
                                 {
@@ -130,12 +127,12 @@ namespace ProcesFaceImageToEmmbedding
                                 }
                                 catch (Exception ex)
                                 {
-                                   
+
                                 }
                                 buffer.Clear();
 
                             }
-                           
+
                         }
                     }
                     catch (Exception ex)
