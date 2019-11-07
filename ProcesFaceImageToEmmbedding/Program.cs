@@ -36,9 +36,9 @@ namespace ProcesFaceImageToEmmbedding
             Metric.Gauge("TotalFaceprocessing Count", () => { return TotalFaceprocessing; }, Unit.Items);
             Metric.Gauge("TotalEmbeddedingsSaveToDb Count", () => { return TotalEmbeddedingsSaveToDb; }, Unit.Items);
 
-            Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null), TimeSpan.FromSeconds(20)));
+            Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null), TimeSpan.FromSeconds(60)));
 
-            var files = Directory.EnumerateFiles(PathToFacePhotos, "*", SearchOption.AllDirectories);
+            var files = Directory.EnumerateFiles(PathToFacePhotos, "*", SearchOption.AllDirectories).Skip(1200000);
             var batch = new List<string>();
 
             var threadFacePhotoProcessTask = new Thread(FacePhotoProcessTask);
