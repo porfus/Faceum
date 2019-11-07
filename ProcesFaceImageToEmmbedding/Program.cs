@@ -38,7 +38,7 @@ namespace ProcesFaceImageToEmmbedding
 
             Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null), TimeSpan.FromSeconds(60)));
 
-            var files = Directory.EnumerateFiles(PathToFacePhotos, "*", SearchOption.AllDirectories).Skip(1200000);
+            var files = Directory.EnumerateFiles(PathToFacePhotos, "*", SearchOption.AllDirectories).Skip(1479630);
             var batch = new List<string>();
 
             var threadFacePhotoProcessTask = new Thread(FacePhotoProcessTask);
@@ -131,7 +131,7 @@ namespace ProcesFaceImageToEmmbedding
                                 }
                                 catch (Exception ex)
                                 {
-
+                                    Console.WriteLine(ex);
                                 }
                                 buffer.Clear();
 
