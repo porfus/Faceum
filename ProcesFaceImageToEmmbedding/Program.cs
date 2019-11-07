@@ -40,7 +40,7 @@ namespace ProcesFaceImageToEmmbedding
 
             Metric.Config.WithReporting(x => x.WithReport(new ConsoleMetricReporter(null), TimeSpan.FromSeconds(60)));
 
-            var files = Directory.EnumerateFiles(PathToFacePhotos, "*", SearchOption.AllDirectories).Skip(1479630);
+            var files = Directory.EnumerateFiles(PathToFacePhotos, "*", SearchOption.AllDirectories);
             var batch = new List<string>();
 
             var threadFacePhotoProcessTask = new Thread(FacePhotoProcessTask);
@@ -49,11 +49,22 @@ namespace ProcesFaceImageToEmmbedding
             threadFacePhotoProcessTask.Start();
             threadSaveToDbTask.Start();
 
+            Console.Write("Getting processing file from db... ");
+            var cursor = _collectionEmbedding.Find(x => true).ToCursor();
+            var processedFilesFromDb = new HashSet<string>(3000000);
+            while(cursor.MoveNext())
+            {
+                foreach(var processedFileFromDb in cursor.Current)
+                {
+                    processedFilesFromDb.Add(processedFileFromDb.FaceId);
+                }
+            }
+            Console.WriteLine("Ok");
+
             foreach (var file in files)
             {   
-                var faceId = Path.GetFileNameWithoutExtension(file);
-                var q = Builders<EmbeddingFaceModel>.Filter.Eq(x => x.FaceId, faceId);
-                if (_collectionEmbedding.Find(q).CountDocuments() != 0)
+                
+                if (processedFilesFromDb.Contains(file))
                 {
                     FileSkippedCount++;
                     continue;
